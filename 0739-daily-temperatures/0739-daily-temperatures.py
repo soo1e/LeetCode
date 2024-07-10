@@ -8,3 +8,4 @@ class Solution:
                 ans[prev_day] = day - prev_day
             stack.append((day, temp))
         return ans
+        
