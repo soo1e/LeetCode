@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
         ans = [0] * len(temperatures)
@@ -8,4 +10,3 @@ class Solution:
                 ans[prev_day] = day - prev_day
             stack.append((day, temp))
         return ans
-        
