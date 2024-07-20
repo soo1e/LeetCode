@@ -1,19 +1,25 @@
+from typing import List
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        def backtracking(start, ans):
-            # base-case : ans에 2개의 원소만 포함되어 있다면
-            if len(ans) == 2:
-                # 두 정수의 합이 target과 같다면, ans를 반환
-                if nums[ans[0]] + nums[ans[1]] == target:
-                    return ans
-                return False
-            # start부터 마지막 원소 인덱스까지 순회
-            for i in range(start, len(nums)):
-                ans.append(i)
-                result = backtracking(i + 1, ans)
-                if result:
-                    return result
-                ans.pop()
-            return False
+        # 원본 리스트의 값과 인덱스를 튜플로 저장
+        indexed_nums = [(num, idx) for idx, num in enumerate(nums)]
+        
+        # 값만 정렬하여 사용하기 위한 리스트
+        sorted_nums = sorted(indexed_nums, key=lambda x: x[0])
+        
+        l, r = 0, len(sorted_nums) - 1
+        
+        while l < r:
+            current_sum = sorted_nums[l][0] + sorted_nums[r][0]
+            
+            if current_sum < target:
+                l += 1
+            elif current_sum > target:
+                r -= 1
+            else:
+                # 원본 리스트에서의 인덱스를 반환
+                return [sorted_nums[l][1], sorted_nums[r][1]]
 
-        return backtracking(0, [])
+        # 솔루션이 보장되지 않는다면 빈 리스트를 반환
+        return []
