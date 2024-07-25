@@ -2,6 +2,7 @@ from collections import deque
 
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        
         # 기본 값 설정
         shortest_dist = -1
         row_len = len(grid)
