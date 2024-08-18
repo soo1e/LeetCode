@@ -1,26 +1,15 @@
-from collections import deque
 from typing import List
 
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        if amount == 0:
-            return 0
+        # DP 테이블 초기화: 크기는 (amount + 1), 초기값은 무한대
+        dp = [float('inf')] * (amount + 1)
+        dp[0] = 0  # 금액 0을 만들기 위한 동전 수는 0
         
-        # BFS를 위한 큐 초기화
-        queue = deque([(0, 0)])  # (현재 금액, 동전 수)
-        visited = set()  # 방문한 금액을 추적하기 위한 집합
-
-        while queue:
-            current_amount, num_coins = queue.popleft()
-            
-            for coin in coins:
-                next_amount = current_amount + coin
-                
-                if next_amount == amount:
-                    return num_coins + 1
-                
-                if next_amount < amount and next_amount not in visited:
-                    visited.add(next_amount)
-                    queue.append((next_amount, num_coins + 1))
+        # 각 금액에 대해 최소 동전 수 계산
+        for coin in coins:
+            for i in range(coin, amount + 1):
+                dp[i] = min(dp[i], dp[i - coin] + 1)
         
-        return -1  # 모든 경우를 탐색했으나 금액을 만들 수 없는 경우
+        # dp[amount]가 여전히 무한대라면, 해당 금액을 만들 수 없다는 의미
+        return dp[amount] if dp[amount] != float('inf') else -1
