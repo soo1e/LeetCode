@@ -23,4 +23,3 @@ class Solution:
         
         # 마지막 계단 또는 마지막에서 두 번째 계단에 도달하는 최소 비용 반환
         return min(minCost[-1], minCost[-2])
-
