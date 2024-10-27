@@ -1,20 +1,27 @@
-# 해시 테이블로 풀어보기
 from typing import List
-
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        # 숫자와 숫자의 인덱스를 키, 밸류로 하는 빈 해시테이블을 만든다.
-        list = {}
+        # 원본 리스트의 값과 인덱스를 튜플로 저장
+        indexed_nums = [(num, idx) for idx, num in enumerate(nums)]
+        
+        # 값만 정렬하여 사용하기 위한 리스트
+        sorted_nums = sorted(indexed_nums, key=lambda x: x[0])
+        
+        l, r = 0, len(sorted_nums) - 1
+        
+        # 왼쪽 포인터가 오른쪽 포인터보다 작을 동안 반복한다.
+        while l < r:
+            current_sum = sorted_nums[l][0] + sorted_nums[r][0]
+            
+            if current_sum < target:
+                l += 1
+            elif current_sum > target:
+                r -= 1
+            else:
+            
+                # 원본 리스트에서의 인덱스를 반환
+                return [sorted_nums[l][1], sorted_nums[r][1]]
 
-        # 반복문
-        for i, num in enumerate(nums):
-            # 목표 값을 만들기 위해 필요한 숫자 계산
-            needed = target - num
-
-            # 필요 숫자가 해시테이블에 존재하면 그 수의 인덱스와 현재 인덱스 반환
-            if needed in list:
-                return [list[needed], i]
-
-            # 아니라면 해시테이블에 숫자와 인덱스 추가
-            list[num] = i
+        # 솔루션이 보장되지 않는다면 빈 리스트를 반환
+        return []
