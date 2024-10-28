@@ -2,7 +2,6 @@ from collections import deque
 
 class Solution:
     def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        
         # 기본 값 설정
         shortest_dist = -1
         row_len = len(grid)
@@ -17,6 +16,8 @@ class Solution:
 
         # BFS 진행할 큐 선언
         queue = deque()
+        
+        # queue(x좌표, y좌표, 거리)
         queue.append((0, 0, 1))
         visited[0][0] = True
     
@@ -40,5 +41,3 @@ class Solution:
                             visited[next_r][next_c] = True
 
         return shortest_dist
-
-        
